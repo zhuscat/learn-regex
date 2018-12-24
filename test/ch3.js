@@ -34,4 +34,33 @@ suite('Ch 3', () => {
   })
 
   // `|` 的优先级比 `^` 和 `$` 低
+
+  test('group', () => {
+    const dateRegex = /^(\d{4})-(\d{2})-(\d{2})$/
+    const matches = dateRegex.exec('2018-12-24')
+    assert(matches[1] === '2018')
+    assert(matches[2] === '12')
+    assert(matches[3] === '24')
+
+    // 分组的编号是根据开括号的顺序进行编号的
+    const nestedDateRegex = /^(((\d{4})-(\d{2}))-(\d{2}))$/
+    const matches2 = nestedDateRegex.exec('2018-12-24')
+    assert(matches2[1] === '2018-12-24')
+    assert(matches2[2] === '2018-12')
+
+    const hrefTagRegex = /^<a\s+href\s*=\s*['"]?([^"'\s]+)['"]?>([^<]+)<\/a>$/
+    assert(hrefTagRegex.test("<a href='zhuscat.com'>Link</a>"))
+    const matches3 = hrefTagRegex.exec("<a href='zhuscat.com'>Link</a>")
+    assert(matches3[1] === 'zhuscat.com')
+    assert(matches3[2] === 'Link')
+
+    // 用 $1, $2...表达分组
+    assert('2018-12-24'.replace(dateRegex, '$1年$2月$3日'), '2018年12月24日')
+
+    // 3.3.1 反向引用
+    assert(/^([a-z])$1$/.test('aa') == true)
+    assert(/^([a-z])$1$/.test('ab') == false)
+
+    // 忽略优先级量词 *？
+  })
 })
