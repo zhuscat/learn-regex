@@ -62,5 +62,19 @@ suite('Ch 3', () => {
     assert(/^([a-z])\1$/.test('ab') == false)
 
     // 忽略优先级量词 *？
+
+    // 3.3.3 命名分组
+    // js 需要支持 ES2017，可用 babel 转码
+    // 用 \d<name> 反向引用
+    // 替换时用 $<name>
+    const namedGroupDateRegex = /(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/
+    const matches4 = namedGroupDateRegex.exec('2018-12-25')
+    assert(matches4.groups.year === '2018')
+    assert(matches4.groups.month === '12')
+    assert(matches4.groups.day === '25')
+
+    // 3.4 非捕获分组(non-capturing group)
+    const nonCapturingGroupDateRegex =/(?:\d{4})-(?:\d{2})-(?:\d{2})/
+    assert(nonCapturingGroupDateRegex.test('2018-12-25') == true)
   })
 })
