@@ -58,8 +58,8 @@ suite('Ch 3', () => {
     assert('2018-12-24'.replace(dateRegex, '$1年$2月$3日'), '2018年12月24日')
 
     // 3.3.1 反向引用
-    assert(/^([a-z])$1$/.test('aa') == true)
-    assert(/^([a-z])$1$/.test('ab') == false)
+    assert(/^([a-z])\1$/.test('aa') == true)
+    assert(/^([a-z])\1$/.test('ab') == false)
 
     // 忽略优先级量词 *？
   })
